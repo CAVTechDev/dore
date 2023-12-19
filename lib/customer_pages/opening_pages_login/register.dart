@@ -1,12 +1,17 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, use_build_context_synchronously, curly_braces_in_flow_control_structures, unused_import
 
 
+import 'package:dore/customer_pages/main_pages/home.dart';
 import 'package:dore/customer_pages/opening_pages_login/login_page.dart';
 import 'package:dore/customer_pages/opening_pages_login/register_confirm.dart';
+import 'package:dore/global/global.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class RegisterCustomer extends StatefulWidget {
@@ -25,6 +30,50 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
   TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  void _submit() async{
+    //validate all fields
+
+    if(_formKey.currentState!.validate()){
+      await firebaseAuth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(), 
+        password: passwordController.text.trim()).then((auth) async {
+          currentUser = auth.user;
+
+          if (currentUser != null) {
+            Map userMap = {
+              "id": currentUser!.uid,
+              "name": usernameController.text.trim(),
+              "email": emailController.text.trim(),
+              "phone": phoneController.text.trim(),
+              "address": addressController.text.trim(),
+              "password": passwordController.text.trim(),
+            };
+
+
+            DatabaseReference userRef = FirebaseDatabase.instance.ref().child("users");
+            userRef.child(currentUser!.uid).set(userMap);
+          }
+
+          await Fluttertoast.showToast(msg: "Successfully Registered");
+          Navigator.push(context, MaterialPageRoute(builder: (context){
+            return CustomerHome();
+          })).catchError((errorMessage){
+            Fluttertoast.showToast(msg: "Error occured: \n $errorMessage");
+          });
+
+        } );
+
+
+
+    }
+    else{
+      Fluttertoast.showToast(msg: "Not all fields are validated");
+    }
+
+  
+  }
 
   bool passwordVisible = false;
   @override
@@ -174,6 +223,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
           //forms
           
                 Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -571,9 +621,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                 //register button
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return RegisterConfirm();
-                    }));
+                  _submit();
                   },
                   child: Center(
                     child: Container(
@@ -593,6 +641,11 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                   ),
                 ),
                 SizedBox(height: 10,),
+
+                Center(
+                  child: Text("Forgot Password?",
+                  style: TextStyle(color: Colors.blue[500]),)),
+
                 Row(
                   
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -600,10 +653,10 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                     Text("Have an account?"),
                     SizedBox(width: 5,),
                     GestureDetector
-                    (onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                        return CustomerLogin();
-                      })));
+                    (onTap: () {
+                     Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return CustomerLogin();
+                     }));
                     },
                       
                       child: Text("Login", style: TextStyle(color: Colors.blue[500], fontSize: 16, fontWeight: FontWeight.bold),))

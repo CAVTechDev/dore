@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "50311591029",
+    "firebase_url": "https://dore-404520-default-rtdb.firebaseio.com",
+    "project_id": "dore-404520",
+    "storage_bucket": "dore-404520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50311591029:android:29dc279c5f8fd93060743c",
+        "android_client_info": {
+          "package_name": "com.example.dore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcOr9gL876Iw9dYTOfVI1q305ccAmoYkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
