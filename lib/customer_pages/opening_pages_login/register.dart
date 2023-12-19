@@ -645,7 +645,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
                 Center(
                   child: Text("Forgot Password?",
                   style: TextStyle(color: Colors.blue[500]),)),
-
+                SizedBox(height: 15,),
                 Row(
                   
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, unused_import
+// ignore_for_file: prefer_const_constructors, unused_import, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 
@@ -8,11 +8,18 @@ import 'firebase_options.dart';
 
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
+ 
 }
 
 class MyApp extends StatelessWidget {
+
+  
   
   const MyApp({super.key});
 
