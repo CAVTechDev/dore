@@ -58,7 +58,7 @@ class _RegisterCustomerState extends State<RegisterCustomer> {
 
           await Fluttertoast.showToast(msg: "Successfully Registered");
           Navigator.push(context, MaterialPageRoute(builder: (context){
-            return CustomerHome();
+            return CustomerLogin();
           })).catchError((errorMessage){
             Fluttertoast.showToast(msg: "Error occured: \n $errorMessage");
           });
