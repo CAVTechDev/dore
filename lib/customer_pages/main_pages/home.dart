@@ -1,15 +1,18 @@
 // ignore_for_file: unused_field, unused_element, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import
 
+import 'package:dore/authentication/authentication.dart';
 import 'package:dore/components/drawertile.dart';
 import 'package:dore/components/page_transition.dart';
+import 'package:dore/customer_pages/drawer_pages/marketplace.dart';
 import 'package:dore/customer_pages/drawer_pages/support.dart';
 import 'package:dore/customer_pages/drawer_pages/trip_history.dart';
 import 'package:dore/components/main_page_container/location_container.dart';
 import 'package:dore/customer_pages/main_pages/destination.dart';
+import 'package:dore/global/global.dart';
 
 import 'package:dore/supervisor_pages/opening_pages/login.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../drawer_pages/about.dart';
@@ -25,6 +28,10 @@ class CustomerHome extends StatefulWidget {
 }
 
 class _CustomerHomeState extends State<CustomerHome> {
+
+  void signOut() async{
+    firebaseAuth.signOut();
+  }
 
   late GoogleMapController mapController;
 
@@ -164,7 +171,7 @@ class _CustomerHomeState extends State<CustomerHome> {
         ),
         backgroundColor: Colors.white,
         child: Container(
-          child: Padding(padding: EdgeInsets.fromLTRB(20, 70, 20, 20), 
+          child: Padding(padding: EdgeInsets.fromLTRB(20, 70, 20, 0), 
           child: Column(
             children: [
               Row(
@@ -199,6 +206,14 @@ class _CustomerHomeState extends State<CustomerHome> {
               SizedBox(height: 20,),
               Divider(color: Colors.grey.shade500,),
               SizedBox(height: 20,),
+              
+              InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return MarketPlaceHome();
+                  }));
+                },
+                child: DrawerTile(name: "Marketplace", icon: Icon(Icons.sell),)),
 
               InkWell(
                 onTap: (){
@@ -235,7 +250,7 @@ class _CustomerHomeState extends State<CustomerHome> {
 
               SizedBox(height: 20),
               Divider(color: Colors.grey.shade600),
-              SizedBox(height: 320,),
+              SizedBox(height: 240,),
               GestureDetector(
 
                 onTap: (){
@@ -252,7 +267,12 @@ class _CustomerHomeState extends State<CustomerHome> {
                   ),
                   child: Text("Sign in as a Supervisor", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
                 ),
-              )
+              ),
+
+              TextButton(onPressed: (){
+                  signOut();
+              }, child: Text("Sign Out", 
+              style: TextStyle(color: Colors.red[500], fontSize: 16),))
 
             ],
           ),

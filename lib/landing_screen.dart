@@ -1,5 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, await_only_futures, use_build_context_synchronously
 
+import 'dart:async';
+
+import 'package:dore/assistants/assistants.dart';
+import 'package:dore/customer_pages/opening_pages_login/login_page.dart';
+import 'package:dore/global/global.dart';
 import 'package:flutter/material.dart';
 
 import 'onboarding.dart';
@@ -12,16 +17,34 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
+
+
+  startTimer(){
+    Timer(Duration(seconds: 10),() async{
+      if(await firebaseAuth.currentUser != null){
+        firebaseAuth.currentUser != null? AssistantModels.readCurrentUserOnlineInfo() : null;
+        Navigator.push(context, MaterialPageRoute(builder: ((context) {
+          return CustomerLogin();
+        })));
+      }
+
+      else{
+        Navigator.push(context, MaterialPageRoute(builder: ((context) {
+          return OnBoardingScreen();
+        })));
+      }
+
+    });
+  }
+  
   @override
+
+
 
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(seconds: 15), (){
-      Navigator.push(context, MaterialPageRoute(builder: (context){
-        return OnBoardingScreen();
-      }));
-    });
+    startTimer();
   }
 
   @override

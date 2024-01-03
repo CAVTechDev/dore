@@ -30,15 +30,15 @@ void toogleObscureText(){
     obscureText = !obscureText;
   });
 }
+  
 
+  
   void _submit() async{
     if (_formKey.currentState!.validate()){
-      await firebaseAuth.signInWithEmailAndPassword(
+    await firebaseAuth.signInWithEmailAndPassword(
         email: emailController.text.trim(), 
         password: passwordController.text.trim()).then((auth) async{
           currentUser = auth.user;
-
-
 
 
         await Fluttertoast.showToast(msg: "Log in successfully");
@@ -281,7 +281,7 @@ void toogleObscureText(){
                   }));
                 },
                  child: Text("Register", 
-                 style: TextStyle(color: Color.fromARGB(255, 60, 207, 158), fontSize: 16, fontWeight: FontWeight.bold,),))
+                 style: TextStyle(color: Color.fromARGB(255, 60, 207, 158), fontSize: 14, fontWeight: FontWeight.bold,),))
               ],
             )
 
