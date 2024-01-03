@@ -1,17 +1,41 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
 
-import 'package:dore/customer_pages/opening_pages_login/otp.dart';
+import 'package:dore/customer_pages/opening_pages_login/login_page.dart';
+import 'package:dore/global/global.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 
 
-class ForgotPassword extends StatelessWidget {
-  final emailController = TextEditingController();
+class ForgotPassword extends StatefulWidget {
 
   ForgotPassword({super.key});
 
   @override
+  State<ForgotPassword> createState() => _ForgotPasswordState();
+}
+
+
+
+class _ForgotPasswordState extends State<ForgotPassword> {
+
+
+  void _submit() async{
+    firebaseAuth.sendPasswordResetEmail(
+      email: emailController.text.trim()).then((value){
+        Fluttertoast.showToast(msg: "We have sent you an email to recover your password, please check the provided email");
+      }).onError((error, stackTrace) {
+        Fluttertoast.showToast(msg: "Error occured \n ${error.toString()}");
+      });
+  }
+  
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+
+  @override 
   Widget build(BuildContext context) {
     return Material(
       child: Container(
@@ -48,91 +72,122 @@ class ForgotPassword extends StatelessWidget {
             Image.asset(
               "images/5.jpg",
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              "Forgot Password",
-              style: TextStyle(
-                color: Colors.grey.shade600,
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+           
             SizedBox(height: 10),
-            Text(
-              """Don't worry! 8 accounts. Please enter the email account linked to all your accounts""",
-              style: TextStyle(
-                color: Colors.grey.shade400,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.justify,
-            ),
-            SizedBox(
-              height: 20,
-            ),
+            
+         
             Text(
               "Email",
               style: (TextStyle(
                 color: Colors.grey.shade600,
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               )),
             ),
             SizedBox(
               height: 10,
             ),
-            TextField(
-              decoration: InputDecoration(
-                fillColor: Colors.grey.shade50,
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade300,
-                    )),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: Colors.purple,
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(50)
+                    ],
+                    decoration: InputDecoration(
+                      fillColor: Colors.grey.shade50,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: Colors.grey.shade300,
+                          )),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 60, 207, 158),
+                        ),
+                      ),
+                      labelText: "Enter your email",
+                      labelStyle: TextStyle(
+                        color: Colors.grey.shade400,
+                        fontSize: 13,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.mail,
+                      ),
+                      floatingLabelStyle: TextStyle(color: Colors.black),
+                    ),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (text){
+                      if (text == null){
+                        return "Email cannot be empty";
+                      }
+                      if (EmailValidator.validate(text) == true){
+                        return null;
+                      }
+                      if (text.length > 50){
+                        return "Email cannot be more than 50";
+                      }
+                      return null;
+                    },
+
+                    onChanged: (text) {
+                      setState(() {
+                        emailController.text = text;
+                      });
+                    },
                   ),
-                ),
-                labelText: "Enter your email",
-                labelStyle: TextStyle(
-                  color: Colors.grey.shade400,
-                  fontSize: 13,
-                ),
-                prefixIcon: Icon(
-                  Icons.mail,
-                ),
-                floatingLabelStyle: TextStyle(color: Colors.black),
+
+
+
+                  SizedBox(height: 20,),
+        
+                ],
               ),
-              controller: emailController,
             ),
             SizedBox(
               height: 20,
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                  return OTPPage();
-                })));
+                _submit();
               },
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 130, vertical: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 60, 207, 158),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Text(
-                  "Send Code",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 60, 207, 158),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    "Send Reset Password",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
+            ),
+            SizedBox(height: 20,),
+            Row(
+              
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                Text("Already have an account?", style: TextStyle(fontSize: 15),),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return CustomerLogin();
+                    }));
+                  },
+                  child: Text("Login", style: TextStyle(color:Color.fromARGB(255, 60, 207, 158), fontSize: 17, fontWeight: FontWeight.bold),))
+              ],
             )
           ],
         ),
