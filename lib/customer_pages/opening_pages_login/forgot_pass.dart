@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables, use_build_context_synchronously
 
 import 'package:dore/customer_pages/opening_pages_login/login_page.dart';
+import 'package:dore/customer_pages/opening_pages_login/reset_confirm.dart';
 import 'package:dore/global/global.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   void _submit() async{
     firebaseAuth.sendPasswordResetEmail(
-      email: emailController.text.trim()).then((value){
-        Fluttertoast.showToast(msg: "We have sent you an email to recover your password, please check the provided email");
+      email: emailController.text.trim()).then((value) async {
+        await Fluttertoast.showToast(msg: "We have sent you an email to recover your password, please check the provided email");
+
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return ResetConfirm();
+        }));
       }).onError((error, stackTrace) {
         Fluttertoast.showToast(msg: "Error occured \n ${error.toString()}");
       });

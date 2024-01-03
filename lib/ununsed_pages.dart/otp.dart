@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:dore/customer_pages/opening_pages_login/new_pass.dart';
+import 'package:dore/ununsed_pages.dart/new_pass.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

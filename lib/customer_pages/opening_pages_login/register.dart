@@ -3,7 +3,7 @@
 
 import 'package:dore/customer_pages/main_pages/home.dart';
 import 'package:dore/customer_pages/opening_pages_login/login_page.dart';
-import 'package:dore/customer_pages/opening_pages_login/register_confirm.dart';
+import 'package:dore/ununsed_pages.dart/register_confirm.dart';
 import 'package:dore/global/global.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
