@@ -54,14 +54,10 @@ void toogleObscureText(){
 
     else(
       Fluttertoast.showToast(msg: "Not all fields are validated")
-    );
-      
-    
-  }
-
-  final passwordController = TextEditingController();
-
-  final emailController = TextEditingController();
+    );    
+    }
+ final passwordController = TextEditingController();
+ final emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 

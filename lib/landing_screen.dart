@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, await_only_futures, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, await_only_futures, use_build_context_synchronously, unused_import
 
 import 'dart:async';
 
@@ -7,6 +7,7 @@ import 'package:dore/customer_pages/opening_pages_login/login_page.dart';
 import 'package:dore/global/global.dart';
 import 'package:flutter/material.dart';
 
+import 'customer_pages/main_pages/home.dart';
 import 'onboarding.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _LandingScreenState extends State<LandingScreen> {
       if(await firebaseAuth.currentUser != null){
         firebaseAuth.currentUser != null? AssistantModels.readCurrentUserOnlineInfo() : null;
         Navigator.push(context, MaterialPageRoute(builder: ((context) {
-          return CustomerLogin();
+          return CustomerHome();
         })));
       }
 
