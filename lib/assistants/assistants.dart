@@ -28,7 +28,7 @@ class AssistantModels {
 
   static Future<String> searchAddressforGeographicCoordinates(Position position, context) async{
 
-    String apiUrl = "https://maps.googleapis.com/maps/api/geocode/jason?latlng=${position.latitude}, ${position.latitude}&key=$mapKey";
+    String apiUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude}, ${position.latitude}&key=$mapKey";
 
     String humanReadableAdrress = "";
 

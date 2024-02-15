@@ -50,7 +50,7 @@ class ViewProfile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Anjola Yinka", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                    Text("Oreoluwa Akanbi", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                     SizedBox(height: 5,),
                     Text("+2349053458693", style: TextStyle(color: Colors.grey.shade600, fontSize: 12),)
                   ],
@@ -69,7 +69,7 @@ class ViewProfile extends StatelessWidget {
           SizedBox(height: 30,),
           ListTile(
             leading: Icon(Icons.mail_outlined),
-            title: Text("anjolaoluwa@gmail.com", style: TextStyle(fontWeight: FontWeight.bold,),),
+            title: Text("cisccav@gmail.com", style: TextStyle(fontWeight: FontWeight.bold,),),
             trailing: Container(
               padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               decoration: BoxDecoration(

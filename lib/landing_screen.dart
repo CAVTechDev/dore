@@ -25,7 +25,7 @@ class _LandingScreenState extends State<LandingScreen> {
       if(await firebaseAuth.currentUser != null){
         firebaseAuth.currentUser != null? AssistantModels.readCurrentUserOnlineInfo() : null;
         Navigator.push(context, MaterialPageRoute(builder: ((context) {
-          return CustomerHome();
+          return CustomerLogin();
         })));
       }
 

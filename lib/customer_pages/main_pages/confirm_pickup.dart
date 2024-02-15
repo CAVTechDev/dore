@@ -2,11 +2,15 @@
 
 
 
+import 'dart:async';
+
 import 'package:dore/components/main_page_container/company_container.dart';
 import 'package:dore/components/main_page_container/location_container.dart';
 import 'package:dore/components/main_page_container/supervisor_connect_cont.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as loc;
 
 
 class ConfirmPickupPage extends StatefulWidget {
@@ -20,15 +24,53 @@ class _ConfirmPickupPageState extends State<ConfirmPickupPage> {
 
   late GoogleMapController mapController;
 
+ final Completer<GoogleMapController> _controllerGoogleMap = Completer();
+  GoogleMapController? newGoogleMapController;
+
+  List<LatLng> plineCoordinatedList = [];
+  Set<Polyline> polylineSet = {};
+
+
+  Set<Marker> markersSet = {};
+  Set<Circle> circlesSet = {};
+
+  
+  LatLng? pickLocation;
+  loc.Location location = loc.Location();
+  String? _address;
+
+
+ Position? userCurrentPosition;
+  var geolocation = Geolocator();
+
   final LatLng _center = const LatLng(6.465422, 3.406448);
 
   final PageController _pageController = PageController();
 
   int _currentPage = 0;
 
-  void _onMapCreated (GoogleMapController controller) {
-    mapController = controller;
-  }
+  // void _onMapCreated (GoogleMapController controller) {
+  //   mapController = controller;
+  // }
+
+
+locateUserPosition() async{
+
+    Position cPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    userCurrentPosition = cPosition;
+
+    LatLng latlngPosition = LatLng(userCurrentPosition!.latitude, userCurrentPosition!.longitude);
+    CameraPosition cameraPosition = CameraPosition(target: latlngPosition);
+
+
+    newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+}
+   static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(6.465422, 3.406448),
+    zoom: 14.4746,
+  );
+
 
 
   @override
@@ -36,9 +78,37 @@ class _ConfirmPickupPageState extends State<ConfirmPickupPage> {
     return Scaffold(
       body: Stack(
         children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(target: _center, zoom: 11.0)),
+           GoogleMap(
+              mapType: MapType.normal,  
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              zoomGesturesEnabled: true,
+              zoomControlsEnabled: true,
+              polylines: polylineSet,
+              markers: markersSet,
+              circles: circlesSet,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller){
+                _controllerGoogleMap.complete(controller);
+                newGoogleMapController = controller;
+      
+              setState(() {
+                  
+                });
+                locateUserPosition();
+              },
+              onCameraMove: (CameraPosition? position) {
+                if(pickLocation != position!.target){
+                  setState(() {
+                    pickLocation = position.target;
+                  });
+                }
+              },
+              onCameraIdle: () {
+                // getAddressfromLatLng();
+              },
+              
+              ),
 
             Positioned(
             top: 30,

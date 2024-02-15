@@ -114,11 +114,11 @@ class _CustomerHomeState extends State<CustomerHome> {
 
     newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
-    String humanReadableAdrress = await AssistantModels.searchAddressforGeographicCoordinates(userCurrentPosition!, context);
-    print("This is your current location" + humanReadableAdrress);
+    // String humanReadableAdrress = await AssistantModels.searchAddressforGeographicCoordinates(userCurrentPosition!, context);
+    // print("This is your current location" + humanReadableAdrress);
 
-    userName = userModelCurrentInfo!.name!;
-    userEmail = userModelCurrentInfo!.email!;
+    // userName = userModelCurrentInfo!.name!;
+    // userEmail = userModelCurrentInfo!.email!;
 
     // initializeGoeFireListener();
 
@@ -128,32 +128,32 @@ class _CustomerHomeState extends State<CustomerHome> {
   }
 
 
-  getAddressfromLatLng() async {
+  // getAddressfromLatLng() async {
 
-    try{
+  //   try{
 
-      GeoData data = await Geocoder2.getDataFromCoordinates(
-        latitude: pickLocation!.latitude, 
-        longitude: pickLocation!.longitude, 
-        googleMapApiKey: mapKey,
+  //     GeoData data = await Geocoder2.getDataFromCoordinates(
+  //       latitude: userCurrentPosition!.latitude, 
+  //       longitude: userCurrentPosition!.longitude,
+  //       googleMapApiKey: mapKey,
 
-        );
+  //       );
 
-    setState(() {
-      Directions userPickupAddress = Directions();
-      userPickupAddress.locationLatitude = pickLocation!.latitude;
-      userPickupAddress.locationLongitue = pickLocation!.longitude;
-      userPickupAddress.locationName = data.address;
+  //   setState(() {
+  //     // Directions userPickupAddress = Directions();
+  //     // userPickupAddress.locationLatitude = pickLocation!.latitude;
+  //     // userPickupAddress.locationLongitue = pickLocation!.longitude;
+  //     // userPickupAddress.locationName = data.address;
 
-      Provider.of<AppInfo>(context, listen: false).updatePickUpLocationAddress(userPickupAddress);
+  //     // Provider.of<AppInfo>(context, listen: false).updatePickUpLocationAddress(userPickupAddress);
 
-      // _address = data.address;
-    });
+  //     _address = data.address;
+  //   });
 
-    } catch(e) {
-      print(e);
-    }
-  }
+  //   } catch(e) {
+  //     print(e);
+  //   }
+  // }
 
 
   checkifLocationPermissionAllowed() async {
@@ -196,13 +196,10 @@ class _CustomerHomeState extends State<CustomerHome> {
               onMapCreated: (GoogleMapController controller){
                 _controllerGoogleMap.complete(controller);
                 newGoogleMapController = controller;
-    
-    
-                setState(() {
+      
+              setState(() {
                   
                 });
-    
-    
                 locateUserPosition();
               },
               onCameraMove: (CameraPosition? position) {
@@ -213,7 +210,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                 }
               },
               onCameraIdle: () {
-                getAddressfromLatLng();
+                // getAddressfromLatLng();
               },
               
               ),
@@ -225,119 +222,119 @@ class _CustomerHomeState extends State<CustomerHome> {
                   child: Image.asset("images/pick.png", height: 45, width: 45 ,),
                 ),
               ),
+
+              
+            Positioned(
+              top: 10,
+              right: 70,
+              left: 70,
+              child: Container(
+                decoration: BoxDecoration(
+                  
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.all(20),
+                child: Text("First Technical University",
+                overflow: TextOverflow.visible, softWrap: true,),
+              ),
+            ),
+    
+    
       
     
-            // UI for Searching location
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left:0,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10)
-                      ,),
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius:  BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(5),
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.location_on_outlined, color: Colors.blue,),
-                                      SizedBox(width: 20,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("From", style: TextStyle(color: Colors.blue, fontSize: 12, fontWeight: FontWeight.bold,),),
+//             // UI for Searching location
+//             Positioned(
+//               bottom: 0,
+//               right: 0,
+//               left:0,
+//               child: Padding(
+//                 padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+//                 child: Column(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Container(
+//                       padding: EdgeInsets.all(10),
+//                       decoration: BoxDecoration(
+//                         color: Colors.white,
+//                         borderRadius: BorderRadius.circular(10)
+//                       ,),
+//                       child: Column(
+//                         children: [
+//                           Container(
+//                             decoration: BoxDecoration(
+//                               color: Colors.grey.shade100,
+//                               borderRadius:  BorderRadius.circular(10),
+//                             ),
+//                             child: Column(
+//                               children: [
+//                                 Padding(
+//                                   padding: EdgeInsets.all(5),
+//                                   child: Row(
+//                                     children: [
+//                                       Icon(Icons.location_on_outlined, color: Colors.blue,),
+//                                       SizedBox(width: 20,),
+//                                       Column(
+//                                         crossAxisAlignment: CrossAxisAlignment.start,
+//                                         children: [
+//                                           Text("From", style: TextStyle(color: Colors.blue, fontSize: 12, fontWeight: FontWeight.bold,),),
 
-                                          Text(Provider.of<AppInfo>(context).userPickupLocation != null
-                                           ? Provider.of<AppInfo>(context).userPickupLocation!.locationName!.substring(0, 24) + "...." 
-                                           : "Not getting address", 
-                                          style: TextStyle(color: Colors.grey, fontSize: 16),)
-                                        ],
-                                      )
-                                    ],
-                                  ),)
-,
-                                  SizedBox(height: 5,),
+//                                           Text(Provider.of<AppInfo>(context).userPickupLocation != null
+//                                            ? Provider.of<AppInfo>(context).userPickupLocation!.locationName!.substring(0, 24) + "...." 
+//                                            : "Not getting address", 
+//                                           style: TextStyle(color: Colors.grey, fontSize: 16),)
+//                                         ],
+//                                       )
+//                                     ],
+//                                   ),)
+// ,
+//                                   SizedBox(height: 5,),
 
-                                  Divider(
-                                    height: 1,
-                                    thickness: 2,
-                                    color: Colors.blue,
-                                  ),
+//                                   Divider(
+//                                     height: 1,
+//                                     thickness: 2,
+//                                     color: Colors.blue,
+//                                   ),
 
-                                  SizedBox(height: 5,),
+//                                   SizedBox(height: 5,),
 
-                                  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: GestureDetector(
-                                      onTap: (){
+//                                   Padding(
+//                                     padding: EdgeInsets.all(10),
+//                                     child: GestureDetector(
+//                                       onTap: (){
 
-                                      },
-                                      child: Row(
-                                    children: [
-                                      Icon(Icons.location_on_outlined, color: Colors.blue,),
-                                      SizedBox(width: 20,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("From", style: TextStyle(color: Colors.blue, fontSize: 12, fontWeight: FontWeight.bold,),),
+//                                       },
+//                                       child: Row(
+//                                     children: [
+//                                       Icon(Icons.location_on_outlined, color: Colors.blue,),
+//                                       SizedBox(width: 20,),
+//                                       Column(
+//                                         crossAxisAlignment: CrossAxisAlignment.start,
+//                                         children: [
+//                                           Text("From", style: TextStyle(color: Colors.blue, fontSize: 12, fontWeight: FontWeight.bold,),),
 
-                                          Text(Provider.of<AppInfo>(context).userPickupLocation != null 
-                                          ? Provider.of<AppInfo>(context).userDropOffLocation!.locationName!.substring(0, 24) + "...." 
-                                          : "Not getting address", 
-                                          style: TextStyle(color: Colors.grey, fontSize: 16),)
-                                        ],
-                                      )
-                                    ],
-                                  ), 
-                                    ),
-                                  )
-                              ],
-                            ) ,
-                          )
-                        ],
-                      )
-                    )
+//                                           Text(Provider.of<AppInfo>(context).userPickupLocation != null 
+//                                           ? Provider.of<AppInfo>(context).userDropOffLocation!.locationName!.substring(0, 24) + "...." 
+//                                           : "Not getting address", 
+//                                           style: TextStyle(color: Colors.grey, fontSize: 16),)
+//                                         ],
+//                                       )
+//                                     ],
+//                                   ), 
+//                                     ),
+//                                   )
+//                               ],
+//                             ) ,
+//                           )
+//                         ],
+//                       )
+//                     )
 
-                  ],
-                ),
-              )),
+//                   ],
+//                 ),
+//               )),
     
-            // Positioned(
-            //   top: 10,
-            //   right: 70,
-            //   left: 70,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-                  
-            //       borderRadius: BorderRadius.circular(20),
-            //       color: Colors.white,
-            //     ),
-            //     padding: EdgeInsets.all(20),
-            //     child: Text(
-            //       Provider.of<AppInfo>(context).userPickupLocation != null 
-            //       ? (Provider.of<AppInfo>(context).userPickupLocation!.locationName!).substring(0 , 24) + "..."
-            //       : "Not Getting Address",
-            //     overflow: TextOverflow.visible, softWrap: true,),
-            //   ),
-            // ),
-    
-    
+
     
     //Drawer button
              Positioned(
@@ -359,59 +356,83 @@ class _CustomerHomeState extends State<CustomerHome> {
                 },),
                ),
              ),
+
+             // Pick up from
           
-          //   Positioned(
-          //     top: 700,
-          //     bottom: 0,
-          //     left: 0,
-          //     right: 0,
-          //     child: Container(
-          // height: 150,
-          // width: double.infinity,
-          // alignment: Alignment(0, 0.8) ,
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          //   color: Colors.white
-          // ),
-          // child: Column(
-          //   children: [
-          //     SizedBox(height: 5,),
-          //     Container(
-          //       height: 7,
-          //       width: 60,
-          //       decoration: BoxDecoration(
-          //         color: Colors.grey.shade300,
-          //         borderRadius: BorderRadius.circular(25)
-          //       ),
-          //     ),
-          //     SizedBox(height: 40,),
-          
-          //     //Textfield
-          //     Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 15),
-          //       child: TextField(
-          //         onTap: (){
-          //           Navigator.push(context, SlideUpPageRoute(page: SelectDestPage()));
-          //         },
-          //         decoration: InputDecoration(
-          //           fillColor: Colors.grey.shade100,
-          //           filled: true,
-          //           enabledBorder: OutlineInputBorder(
-          //             borderRadius: BorderRadius.circular(15),
-          //             borderSide: BorderSide.none,
-          //           ),
-          //           labelText: "Pickup from",
-          //           labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 13,),
-          //           prefixIcon: Icon(Icons.search,)
-                    
-          //         ),
-          //         controller: TextEditingController(),
-          //       ),
-          //     )
-          //   ],
-          // ),
-          //   ),
-          //   ),
+            Positioned(
+             
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0,50,0,0),
+                child: Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                          color: Colors.white
+                        ),
+                        child: Column(
+                          children: [
+                SizedBox(height: 5,),
+                Container(
+                  height: 7,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(25)
+                  ),
+                ),
+                SizedBox(height: 40,),
+                        
+                //Current Location Textfield
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, SlideUpPageRoute(page: SelectDestPage()));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(10)
+                      ),child: Row(
+                        children: [
+                          Icon(Icons.search),
+                          SizedBox(width: 15,),
+                          Text("Pickup From", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 13),)
+                        ],
+                      ),
+                    ),
+                  ),),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 5),
+                //   child: TextField(
+                //     onTap: (){
+                //       Navigator.push(context, SlideUpPageRoute(page: SelectDestPage()));
+                //     },
+                //     decoration: InputDecoration(
+                //       fillColor: Colors.grey.shade100,
+                //       filled: true,
+                //       enabledBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(15),
+                //         borderSide: BorderSide.none,
+                //       ),
+                //       labelText: "Pickup from",
+                //       labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w800, fontSize: 13,),
+                //       prefixIcon: Icon(Icons.search,)
+                      
+                //     ),
+                //     controller: TextEditingController(),
+                //   ),
+                // ),
+                SizedBox(height: 40,)        
+                          ],
+                        ),
+                          ),
+              ),
+            ),
           
           
               
@@ -421,8 +442,7 @@ class _CustomerHomeState extends State<CustomerHome> {
       
       
       
-      
-      
+       
       
       
       
@@ -437,7 +457,7 @@ class _CustomerHomeState extends State<CustomerHome> {
             ),
             backgroundColor: Colors.white,
             child: Container(
-              child: Padding(padding: EdgeInsets.fromLTRB(20, 70, 20, 0), 
+              child: Padding(padding: EdgeInsets.fromLTRB(20, 20, 20, 0), 
               child: Column(
                 children: [
                   Row(
@@ -455,7 +475,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Anjola", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),),
+                          Text("Oreoluwa", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),),
                           SizedBox(height: 5,),
                           InkWell(
                             onTap: (){

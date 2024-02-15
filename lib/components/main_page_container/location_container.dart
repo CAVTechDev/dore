@@ -32,7 +32,7 @@ class ConfirmLocation extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: ListTile(
                   leading: Icon(Icons.check_box_rounded,color: Color.fromARGB(255, 60, 207, 158),),
-                  title: Text("Ringroad Ibadan", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),),
+                  title: Text("First Technical University, Ibadan", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13), overflow: TextOverflow.fade, softWrap: true,),
                   trailing: Icon(Icons.edit),
                 ),
               ),
