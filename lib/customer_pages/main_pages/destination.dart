@@ -2,6 +2,7 @@
 
 
 import 'package:dore/customer_pages/main_pages/confirm_pickup.dart';
+import 'package:dore/models/predicted_places.dart';
 import 'package:flutter/material.dart';
 
 
@@ -15,6 +16,13 @@ class SelectDestPage extends StatefulWidget {
 }
 
 class _SelectDestPageState extends State<SelectDestPage> {
+
+  List<PredictedPlaces> placesPredictedList = [];
+
+  findPlaceAutoCompleteSearch(String inputText) async {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +59,10 @@ class _SelectDestPageState extends State<SelectDestPage> {
                   width: 320,
                  
                   child: TextField(
+                    onChanged: (value){
+                      findPlaceAutoCompleteSearch(value);
+
+                    },
                     decoration: InputDecoration(
                       fillColor: Colors.grey.shade200,
                       filled: true,
@@ -60,13 +72,23 @@ class _SelectDestPageState extends State<SelectDestPage> {
                         
                       ),
                       suffixIcon: Icon(Icons.cancel,),
-                      labelText: "Current Location",
+                      labelText: "Search Pickup Location",
                       labelStyle: TextStyle(color: Colors.grey.shade600, fontSize: 13,)
                     ),
                   ),
                 )
               ],
             ),
+
+            // (placesPredictedList.length >0) ?
+            // Expanded(
+            //   child: ListView.separated(
+            //     itemBuilder: itemBuilder,
+            //     separatorBuilder: separatorBuilder, 
+            //     itemCount: placesPredictedList.length,
+            //     physics: ClampingScrollPhysics(),),
+
+            // ),
       
             //company textfield
             SizedBox(height: 15,),
@@ -95,7 +117,7 @@ class _SelectDestPageState extends State<SelectDestPage> {
               ],
             ),
       
-            //select button
+            // select button
       
             SizedBox(height:500,),
             InkWell(

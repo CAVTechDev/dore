@@ -91,10 +91,13 @@ class _CustomerHomeState extends State<CustomerHome> {
   Set<Marker> markersSet = {};
   Set<Circle> circlesSet = {};
 
-
+  GeoData? data;
   String? userName;
   String? userEmail;
+  String? userAddress;
 
+  String? latitude;
+  String? longitude;
 
   bool openNavigationDrawer = true;
 
@@ -114,6 +117,16 @@ class _CustomerHomeState extends State<CustomerHome> {
 
     newGoogleMapController!.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
 
+        data = await Geocoder2.getDataFromCoordinates(
+        latitude: userCurrentPosition!.latitude, 
+        longitude: userCurrentPosition!.longitude,
+        googleMapApiKey: mapKey,
+
+      );
+
+      userAddress = data!.address.toString();
+
+      
     // String humanReadableAdrress = await AssistantModels.searchAddressforGeographicCoordinates(userCurrentPosition!, context);
     // print("This is your current location" + humanReadableAdrress);
 
@@ -235,7 +248,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                   color: Colors.white,
                 ),
                 padding: EdgeInsets.all(20),
-                child: Text("First Technical University",
+                child: Text(userAddress.toString(),
                 overflow: TextOverflow.visible, softWrap: true,),
               ),
             ),

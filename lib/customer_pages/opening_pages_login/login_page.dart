@@ -212,7 +212,10 @@ void toogleObscureText(){
             //login button
             GestureDetector(
               onTap: (){
-                _submit();
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return CustomerHome();
+                }));
+                // _submit();
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 100, vertical: 20),

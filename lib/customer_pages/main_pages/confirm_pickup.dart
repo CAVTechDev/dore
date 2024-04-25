@@ -132,28 +132,32 @@ locateUserPosition() async{
 
 // container
            Positioned(
-            top: 650,
-            left:  0,
-            right: 0,
-            bottom: 0,
-             child: PageView(
-              controller: _pageController,
-              onPageChanged: (index){
-                setState(() {
-                  _currentPage = index;
-                });
-              },
-               children: [
-                 ConfirmLocation(onNextPressed: (){
-                  _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
-                 }),
-                 ConfirmCompany(onNextPressed: () { 
-                  _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-                 }),
-                 ConnectSupervisor(),
-                 
-                 
-               ],
+           bottom: 0,
+           left: 0,
+           right: 0,
+             child: Padding(
+               padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+               child: PageView(
+                controller: _pageController,
+                onPageChanged: (index){
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                 children: [
+                   ConfirmLocation(onNextPressed: (){
+                    _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+                   }),
+                   ConfirmCompany(onNextPressed: () { 
+                    _pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+                   }),
+                   ConnectSupervisor(onNextPressed: (){
+                    _pageController.nextPage(duration: Duration(milliseconds: 50), curve: Curves.easeIn);
+                   },),
+                   
+                   
+                 ],
+               ),
              ),
            )
 
